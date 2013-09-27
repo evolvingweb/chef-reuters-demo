@@ -1,0 +1,22 @@
+before:
+ - berks install --path ./cookbooks
+
+environments:
+  production:
+    attributes:
+      drupal-solr:
+        solr_version: '1.4.0'
+        app_name: 'reuters'
+        home_dir: '/var/shared/sites/reuters/solr-home'
+    run_list:
+      - recipe[reuters-demo::default]
+    
+    nodes:
+      box:
+        host: 33.33.177.120
+        user: vagrant
+        password: vagrant
+        vagrant:
+          IP: 33.33.177.120
+          cpu: 1
+          memory: 256
