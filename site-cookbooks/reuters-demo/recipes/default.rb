@@ -9,7 +9,7 @@ include_recipe 'apt'
 include_recipe 'drupal-solr::install_solr'
 
 data_filename = node['reuters-demo']['project_root'] + "/reuters_data.tar.gz"
-remote_file "download-reuters-data" do
+remote_file "reuters-data" do
   owner node['tomcat']['user']
   group node['tomcat']['group']
   source node['reuters-demo']['indexed_data_src']
@@ -29,11 +29,10 @@ end
 
 %w{schema.xml solrconfig.xml stopwords.txt}.each do |f|
   cookbook_file f do
-    path node['drupal-solr']['home_dir'] + '/conf'
+    path "#{node['drupal-solr']['home_dir']}/conf/#{f}"
     owner node['tomcat']['user']
     group node['tomcat']['group']
     mode 0775
-    action :create_if_missing
   end
 end
 

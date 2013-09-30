@@ -11,3 +11,4 @@ end
 depends 'drupal-solr'
 depends 'tomcat'
 depends 'apt'
+depends 'build-essential'
