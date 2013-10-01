@@ -7,12 +7,14 @@ if node['reuters-demo']['nodejs_from_src']
   # compile nodejs from source
   include_recipe 'build-essential'
   nodejs = "node-v#{node['reuters-demo']['nodejs_version']}"
+  # urls are of the form: http://nodejs.org/dist/v0.10.20/node-v0.10.20.tar.gz
+  download_url = "http://nodejs.org/dist/v#{node['reuters-demo']['nodejs_version']}/node-v#{node['reuters-demo']['nodejs_version']}.tar.gz"
   bash "install-nodejs-from-source" do
     code <<-EOH
-      wget http://nodejs.org/dist/v0.10.18/#{nodejs}.tar.gz
+      wget #{download_url} 
       tar zxf #{nodejs}.tar.gz
       cd #{nodejs}
-      ./configure && make && make install
+      ./configure && make -j 2 && make install
       export NODE_PATH=#{node['reuters-demo']['nodejs_path']}
       export PATH=#{node['reuters-demo']['nodejs_bin']}:$PATH
     EOH
