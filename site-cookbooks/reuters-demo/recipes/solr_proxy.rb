@@ -48,33 +48,23 @@ file "#{node['reuters-demo']['project_root']}/reuters-solr-proxy.js" do
   content proxy_app
 end
 
-execute 'install-forever' do
-  command "npm install -g forever"
-  creates "#{node['reuters-demo']['nodejs_bin']}/forever"
-end
-
 execute 'install-solr-security-proxy' do
   cwd node['reuters-demo']['project_root']
   command "npm install solr-security-proxy"
   creates "#{node['reuters-demo']['project_root']}/node_modules/solr-security-proxy"
 end
 
-template '/etc/init.d/reuters-solr-proxy' do
+template '/etc/init/reuters-solr-proxy.conf' do
   variables ({
     :dir => node['reuters-demo']['project_root'],
-    :node_appfile => 'reuters-solr-proxy.js',
-    :forever_logfile => '/var/log/reuters-solr-proxy.log'
+    :proxy_port => node['reuters-demo']['port'],
+    :solr_port => node['tomcat']['port']
   })
   mode 0755
-  source 'reuters-solr-proxy.erb'
-  notifies :run, 'execute[install-systemv-link]'
-end
-
-execute 'install-systemv-link' do
-  command 'update-rc.d reuters-solr-proxy defaults'
-  action :nothing
+  source 'reuters-solr-proxy.conf.erb'
+  notifies :run, 'execute[start-server]'
 end
 
 execute 'start-server' do
-  command 'service reuters-solr-proxy start'
+  command 'start reuters-solr-proxy'
 end
