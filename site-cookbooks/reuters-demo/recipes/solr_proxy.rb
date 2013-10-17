@@ -38,19 +38,9 @@ directory node['reuters-demo']['project_root'] do
   recursive true
 end
 
-proxy_app = "require('solr-security-proxy').start(#{node['reuters-demo']['port']} \
-              ,{validPaths: ['/#{node['drupal-solr']['app_name']}/select'], \ 
-                backend_port: #{node['tomcat']['port']}});"
-
-file "#{node['reuters-demo']['project_root']}/reuters-solr-proxy.js" do
-  owner node['tomcat']['user']
-  group node['tomcat']['group']
-  content proxy_app
-end
-
 execute 'install-solr-security-proxy' do
   cwd node['reuters-demo']['project_root']
-  command "npm install solr-security-proxy"
+  command "npm install -g solr-security-proxy"
   creates "#{node['reuters-demo']['project_root']}/node_modules/solr-security-proxy"
 end
 
