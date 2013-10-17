@@ -8,12 +8,13 @@ environments:
         solr_version: '1.4.0'
         app_name: 'reuters'
         home_dir: '/var/shared/sites/reuters/solr-home'
-      reuters-demo:
-        # c.f https://github.com/isaacs/npm/issues/2907
-        nodejs_from_src: true
     run_list:
       - recipe[reuters-demo::default]
     nodes:
+      server:
+        before: apt-get update && apt-get install -q -y curl
+        host: reuters-demo.tree.ewdev.ca
+        user: root
       box:
         host: 33.33.177.120
         user: vagrant
