@@ -13,13 +13,13 @@ environments:
     nodes:
       server:
         before: apt-get update && apt-get install -q -y curl
-        host: reuters-demo.tree.ewdev.ca
+        host: fqdn.for.your.remote.server
         user: root
       box:
-        host: 33.33.177.120
+        host: 192.168.50.4
         user: vagrant
         password: vagrant
         vagrant:
-          IP: 33.33.177.120
+          IP: 192.168.50.4
           cpu: 1
           memory: 256

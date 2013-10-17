@@ -10,6 +10,7 @@ require 'gusteau'
 Vagrant.configure('2') do |config|
   #config.vm.box = 'precise64'
   config.omnibus.chef_version = '11.4.4'
+  config.vm.network 'private_network', ip: '192.168.50.4'
 
   Gusteau::Vagrant.detect(config) do |setup|
     setup.defaults.box = 'precise64'
