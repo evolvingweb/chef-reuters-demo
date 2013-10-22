@@ -12,7 +12,6 @@ environments:
       - recipe[reuters-demo::default]
     nodes:
       server:
-        before: apt-get update && apt-get install -q -y curl
         host: fqdn.for.your.remote.server
         user: root
       box:
