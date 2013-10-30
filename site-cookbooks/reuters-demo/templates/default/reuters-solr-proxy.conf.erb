@@ -10,5 +10,5 @@ respawn
 script
   exec 2>> /var/log/upstart/reuters-err.log
   exec 1>> /var/log/upstart/reuters-access.log
-  solr-security-proxy --port <%= @proxy_port %> --backend.port <%= @solr_port %>
+  solr-security-proxy --port <%= @proxy_port %> --backend.port <%= @solr_port %> --validPaths "/<%= node['drupal-solr']['app_name']%>/select"
 end script

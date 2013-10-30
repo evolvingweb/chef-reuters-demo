@@ -56,5 +56,5 @@ template '/etc/init/reuters-solr-proxy.conf' do
 end
 
 execute 'start-server' do
-  command 'start reuters-solr-proxy'
+  command 'service reuters-solr-proxy restart'
 end
